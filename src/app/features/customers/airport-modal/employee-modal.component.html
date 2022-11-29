@@ -1,0 +1,62 @@
+<form [formGroup]='employeeForm' (ngSubmit)='onSubmit()' class='container'>
+  <div mat-dialog-title fxLayout="row" fxLayoutAlign="start center" class="mat-typography d-flex header-div">
+    <mat-icon color="accent" class="mr-16">account_balance</mat-icon>
+    <h2 class="m-0" fxFlex="initial" class='header-text'>{{header}}</h2>
+    <button mat-icon-button mat-dialog-close class='ml-auto'>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider class="-mx-24"></mat-divider>
+  <div mat-dialog-content>
+    <div class="form-group">
+      <div fxLayout="column" fxLayoutGap="16px" class="mt-16">
+        <mat-form-field appearance="fill" class='full-width'>
+          <mat-label>Select Airport</mat-label>
+          <input type="text" placeholder="Select a Airport" matInput formControlName="airportCode"
+            [matAutocomplete]="airportAuto" [readonly]='isEdit'>
+          <mat-autocomplete #airportAuto="matAutocomplete" (optionSelected)='airportSelected($event)'>
+            <mat-option *ngFor="let option of filteredAirportreferences"
+              value="{{option.airportCode}}-{{option.airportName}}">
+              {{option.airportCode}}-{{option.airportName}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="airportForm.get('airportCode')?.invalid">{{getAirportCodeErrors()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutGap="16px" class="mt-16">
+        <div class='airport-location'>
+          <mat-label>Airport Location</mat-label>
+          <p *ngIf='airportData'>{{airportData.city}}</p>
+          <p *ngIf='!airportData'>-</p>
+        </div>
+        <div class='timezone'>
+          <mat-label>Timezone</mat-label>
+          <p *ngIf='airportData'>{{airportData.timezone}}</p>
+          <p *ngIf='!airportData'>-</p>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutGap="16px" class="mt-16">
+        <mat-form-field appearance="fill" class='full-width'>
+          <mat-label>Select Manager</mat-label>
+          <input type="text" placeholder="Select a Airport" matInput formControlName="airportManager"
+            [matAutocomplete]="airportManagerAuto">
+          <mat-autocomplete #airportManagerAuto="matAutocomplete" (optionSelected)='airportManagerSelected($event)'>
+            <mat-option *ngFor="let option of filteredAirportManager"
+              value="{{option.employeeID}}-{{option.employeeName}}">
+              {{option.employeeID}}-{{option.employeeName}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="airportForm.get('airportManager')?.invalid">{{getManagerErrors()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="toggle mt-3 mb-3">
+        <mat-slide-toggle color="primary" formControlName="active">Active</mat-slide-toggle>
+      </div>
+    </div>
+  </div>
+  <mat-divider class="-mx-24"></mat-divider>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-stroked-button color="primary" [disabled]="airportForm.invalid">Save</button>
+  </div>
+</form>

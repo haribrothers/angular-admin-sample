@@ -1,0 +1,28 @@
+.header-text {
+    display: inline;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.airport-location {
+    display: inline-block;
+    width: 50%;
+    mat-label {
+        color: grey;
+        font-size: smaller;
+    }
+}
+
+.timezone {
+    display: inline-block;
+    mat-label {
+        color: grey;
+        font-size: smaller;
+    }
+}
+
+.header-div {
+    margin-bottom: 0px;
+}
